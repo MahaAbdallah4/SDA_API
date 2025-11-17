@@ -4,6 +4,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import utilities.ApiUtilities;
+import utilities.UserId;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class C04_UpdateUser {
 
         Response response = given(ApiUtilities.spec())
                 .body(payload)
-                .put("/users/4403");
+                .put("/users/" + UserId.id);
 
         response.then()
                 .statusCode(200)
