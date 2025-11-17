@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Users CRUD Suite">
+    <test verbose="2" preserve-order="true" name="users">
+        <classes>
+
+            <class name="tests.C01_CreateUser"/>
+            <class name="tests.C02_GetUserById"/>
+            <class name="tests.C03_GetAllUser"/>
+            <class name="tests.C04_UpdateUser"/>
+            <class name="tests.C05_DeleteUser"/>
+
+        </classes>
+    </test>
+</suite>
