@@ -1,6 +1,6 @@
 package utilities;
 
-import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -11,37 +11,40 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 public class ApiUtilities {
-    public static final String BASE_URL = "https://bazaarstores.com/api";
 
-    private static String token= null;
+    private static String token;
+
+    public static String getToken() {
+        Map<String, String> payload = new HashMap<>();
+        payload.put("email", ConfigReader.getAdminEmail());
+        payload.put("password", ConfigReader.getDefaultPassword());
+
+        Response response = given()
+                .body(payload)
+                .contentType(ContentType.JSON)
+                .post(ConfigReader.getApiBaseUrl() + "/login");
+
+        if (response.getStatusCode() != 200) {
+            System.out.println("Failed to authenticate: " + response.getStatusCode() + " - " + response.asString());
+            throw new RuntimeException("Failed to get token: " + response.getBody().asString());
+        }
+
+        return response.jsonPath().getString("authorisation.token");
+    }
+
+    public static void setToken(String authToken) {
+        token = authToken;
+    }
 
     public static RequestSpecification spec() {
-        return new RequestSpecBuilder()
-                .setBaseUri(BASE_URL)
-                .addHeader("Authorization", "Bearer " + getToken())
-                .setContentType(ContentType.JSON)
-                .build();
-    }
+        RequestSpecification requestSpec = RestAssured.given()
+                .baseUri("https://bazaarstores.com") // Adjust the base URI as needed
+                .contentType(ContentType.JSON);
 
-
-    private static String getToken() {
-        if (token == null) {
-            Map<String, Object> payload = new HashMap<>();
-            payload.put("email", ConfigReader.getAdminEmail());
-            payload.put("password", ConfigReader.getDefaultPassword());
-
-            Response response = given()
-                    .body(payload)
-                    .contentType(ContentType.JSON)
-                    .post(BASE_URL + "/login"); // make sure login endpoint is correct
-
-            token = response.jsonPath().getString("authorisation.token"); // adjust path if needed
+        if (token != null) {
+            requestSpec.header("Authorization", "Bearer " + token);
         }
-        return token;
-    }
 
-    // Reset token if needed
-    public static void clearToken() {
-        token = null;
+        return requestSpec;
     }
 }
