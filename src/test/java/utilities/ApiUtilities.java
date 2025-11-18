@@ -36,6 +36,10 @@ public class ApiUtilities {
         return token;
     }
 
+    public static void setToken(String authToken) {
+        token = authToken;
+    }
+
     public static RequestSpecification spec() {
         return new RequestSpecBuilder()
                 .setBaseUri(ConfigReader.getApiBaseUrl())
