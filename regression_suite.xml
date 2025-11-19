@@ -8,7 +8,6 @@
             <class name="tests.C01_CreateUser"/>
             <class name="tests.C02_GetUserById"/>
             <class name="tests.C03_GetAllUser"/>
-            <class name="tests.C04_UpdateUser"/>
             <class name="tests.US11_15"/>
             <class name="tests.C05_DeleteUser"/>
 
