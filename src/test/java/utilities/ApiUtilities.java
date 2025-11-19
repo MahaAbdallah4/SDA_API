@@ -12,7 +12,6 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 public class ApiUtilities {
-
     private static String token;
 
     public static String getToken() {
@@ -49,3 +48,4 @@ public class ApiUtilities {
                 .build();
     }
 }
+
