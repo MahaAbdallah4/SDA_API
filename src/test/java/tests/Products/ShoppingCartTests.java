@@ -14,15 +14,15 @@ public class ShoppingCartTests {
 
     @Test
     public void TC_US005_001() {
-        String payload = "{ \"product_id\": 123, \"quantity\": 1 }";
-        Response response = given(ApiUtilities.spec()).body(payload).post("/customer/cart/add");
+        String payload = "{ \"product_id\": 19, \"quantity\": 1 }";
+        Response response = given(ApiUtilities.spec()).body(payload).post("/cart/add");
         response.prettyPrint();
     }
 
     @Test
     public void TC_US005_002() {
-        String payload = "{ \"product_id\": 999, \"quantity\": 1 }";
-        Response response = given(ApiUtilities.spec()).body(payload).post("/customer/cart/add");
+        String payload = "{ \"product_id\": 9999, \"quantity\": 1 }";
+        Response response = given(ApiUtilities.spec()).body(payload).post("/cart/add");
         response.prettyPrint();
     }
 }
